@@ -41,6 +41,27 @@ app.use(function (request, response) {
     });
 });
 
-app.listen(app.get('port'), function (request, response) {
+/**
+ app.listen(app.get('port'), function (request, response) {
     console.log('Express Server Listening To ' + app.get('port'));
 });
+ */
+
+// Using With Socket
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var onlineUser = 0;
+
+io.sockets.on('connection', function (socket) {
+    onlineUser++;
+    io.sockets.emit('onlineUsers', {onlineUsers: onlineUser});
+
+    socket.on('disconnect', function () {
+        onlineUser--;
+        io.sockets.emit('onlineUsers', {onlineUsers: onlineUser});
+    })
+});
+
+server.listen(app.get('port'), function () {
+    console.log('Express Server Listening On ' + app.get('port'));
+})
