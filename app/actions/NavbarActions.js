@@ -30,7 +30,8 @@ class NavbarActions {
 
     getCharacterCount() {
         $.ajax({
-                url: '/api/characters/count'
+                url: '/api/characters/count',
+                cache: false
             })
             .done((data) => {
                 this.actions.getCharacterCountSuccess(data)

@@ -1,0 +1,2 @@
+mongorestore newedenfaces.bson -d nef -c characters
+mongorestore newedenfaces.bson -d test -c characters
